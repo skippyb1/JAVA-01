@@ -1,10 +1,7 @@
 package com.guanqp.java01.week03.outbound.netty4;
 
 import io.netty.bootstrap.Bootstrap;
-import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelInitializer;
-import io.netty.channel.ChannelOption;
-import io.netty.channel.EventLoopGroup;
+import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
@@ -13,7 +10,7 @@ import io.netty.handler.codec.http.HttpResponseDecoder;
 
 public class NettyHttpClient {
 
-    public static void connect(String host, int port,Object msg) throws Exception {
+    public static void connect(String host, int port,Object msg,final ChannelHandlerContext ctx) throws Exception {
         EventLoopGroup workerGroup = new NioEventLoopGroup();
 
         try {
@@ -28,7 +25,7 @@ public class NettyHttpClient {
                     ch.pipeline().addLast(new HttpResponseDecoder());
                      //客户端发送的是httprequest，所以要使用HttpRequestEncoder进行编码
                     ch.pipeline().addLast(new HttpRequestEncoder());
-                    ch.pipeline().addLast(new NettyHttpClientOutboundHandler());
+                    ch.pipeline().addLast(new NettyHttpClientOutboundHandler(ctx));
                 }
             });
 

@@ -11,7 +11,6 @@ import io.netty.handler.codec.http.DefaultFullHttpResponse;
 import io.netty.handler.codec.http.FullHttpResponse;
 import io.netty.handler.codec.http.HttpContent;
 import io.netty.handler.codec.http.HttpResponse;
-import io.netty.util.CharsetUtil;
 
 import static io.netty.handler.codec.http.HttpResponseStatus.NO_CONTENT;
 import static io.netty.handler.codec.http.HttpResponseStatus.OK;
@@ -20,7 +19,10 @@ import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
 public class NettyHttpClientOutboundHandler  extends ChannelInboundHandlerAdapter {
 
     HttpResponseFilter filter = new HeaderHttpResponseFilter();
-
+    ChannelHandlerContext originCtx;
+    public NettyHttpClientOutboundHandler(ChannelHandlerContext originCtx){
+        this.originCtx = originCtx;
+    }
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg)
             throws Exception {
@@ -64,7 +66,7 @@ public class NettyHttpClientOutboundHandler  extends ChannelInboundHandlerAdapte
                 response = new DefaultFullHttpResponse(HTTP_1_1, NO_CONTENT);
                 exceptionCaught(ctx, e);
             } finally {
-                ctx.writeAndFlush(response);
+                originCtx.writeAndFlush(response);
                 //ctx.close();
             }
         }

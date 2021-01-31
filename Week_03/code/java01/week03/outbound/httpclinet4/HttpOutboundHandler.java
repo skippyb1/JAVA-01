@@ -80,7 +80,7 @@ public class HttpOutboundHandler {
         URL uri = new URL(url);
         String host = uri.getHost();
         int port = uri.getPort();
-        NettyHttpClient.connect(host,port,inbound);
+        NettyHttpClient.connect(host,port,inbound,ctx);
 
       } catch (Exception e) {
 
