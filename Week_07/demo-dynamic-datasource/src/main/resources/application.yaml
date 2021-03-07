@@ -1,0 +1,25 @@
+
+#spring:
+#  datasource:
+#    driver-class-name: com.mysql.jdbc.Driver
+#    url: "jdbc:mysql://localhost:3306/demo?rewriteBatchedStatements=true&useUnicode=true&characterEncoding=UTF8&useSSL=false"
+#    username: root
+#    password:
+
+demo:
+  datasources:
+    master:
+      driver: com.mysql.jdbc.Driver
+      url: "jdbc:mysql://localhost:3306/demo?rewriteBatchedStatements=true&useUnicode=true&characterEncoding=UTF8&useSSL=false"
+      username: root
+      password:
+    slaves:
+      - driver: com.mysql.jdbc.Driver
+        url: "jdbc:mysql://localhost:3306/demo1?rewriteBatchedStatements=true&useUnicode=true&characterEncoding=UTF8&useSSL=false"
+        username: root
+        password:
+      - driver: com.mysql.jdbc.Driver
+        url: "jdbc:mysql://localhost:3306/demo2?rewriteBatchedStatements=true&useUnicode=true&characterEncoding=UTF8&useSSL=false"
+        username: root
+        password:
+

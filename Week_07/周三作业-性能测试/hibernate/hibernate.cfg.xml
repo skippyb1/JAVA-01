@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <!-- 配置数据库连接 connection -->
+    <session-factory>
+        <!-- 数据库驱动 -->
+        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+        <!-- 数据库地址 localhost可以写作 jdbc:mysql:/// -->
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/demo?rewriteBatchedStatements=true&amp;useUnicode=true&amp;characterEncoding=UTF8&amp;useSSL=false</property>
+        <!-- 数据库用户名 -->
+        <property name="hibernate.connection.username">root</property>
+        <!-- 数据库用户的密码 -->
+        <property name="hibernate.connection.password"></property>
+
+        <!-- 数据库方言 MySQL -->
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+
+        <!-- 连接池 C3P0 -->
+        <!-- <property name="hibernate.connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</property>-->
+
+        <!-- 格式化输出生成的SQL语句 -->
+        <property name="hibernate.jdbc.batch_size">200</property>
+        <property name="hibernate.show_sql">false</property>
+        <property name="hibernate.format_sql">true</property>
+        <property name="hibernate.hbm2ddl.auto">validate</property>
+        <mapping class="com.guanqp.java01.week07.hibernate.Order"></mapping>
+
+
+    </session-factory>
+</hibernate-configuration>
