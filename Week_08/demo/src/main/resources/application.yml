@@ -1,0 +1,54 @@
+spring:
+  shardingsphere:
+    props:
+      sql-show: true
+    datasource:
+      names: week08ds0,week08ds1
+      common:
+        type: com.zaxxer.hikari.HikariDataSource
+      week08ds0:
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.mysql.jdbc.Driver
+        jdbc-url: jdbc:mysql://localhost:3306/week08ds0
+        username: root
+        password:
+      week08ds1:
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.mysql.jdbc.Driver
+        jdbc-url: jdbc:mysql://localhost:3306/week08ds1
+        username: root
+        password:
+    rules:
+      sharding:
+        key-generators:
+          snowflake:
+            type: SNOWFLAKE
+            props:
+              worker-id: 123
+        tables:
+          s_order_info:
+            actual-data-nodes: week08ds$->{0..1}.s_order_info$->{1..16}
+            database-strategy:
+              standard:
+                sharding-column: user_id
+                sharding-algorithm-name: database-inline
+            key-generate-strategy:
+              column: id
+              key-generate-name: snowflake
+            table-strategy:
+              standard:
+                sharding-column: id
+                sharding-algorithm-name: table-inline
+        sharding-algorithms:
+          database-inline:
+            type: INLINE
+            props:
+              algorithm-expression: week08ds$->{user_id % 2}
+              allow-range-query-with-inline-sharding: true
+          table-inline:
+            type: INLINE
+            props:
+              algorithm-expression: s_order_info$->{id % 16}
+              allow-range-query-with-inline-sharding: true
+
+
